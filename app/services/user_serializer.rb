@@ -1,4 +1,5 @@
 class UserSerializer
+    # attributes :id, :name, :username, :created_at, :updated_at
 
     def initialize(user_object)
         @user = user_object
@@ -6,9 +7,12 @@ class UserSerializer
 
     def to_serialized_json
         @user.to_json(
-            include: {
-                :carts
+            :include => {
+                :cart => { :include => { 
+                    :items => {:only => [:item_id, :name, :sales_price]}
+                }
             }
-        )
+        }, :except => [:password])
     end
+
 end
