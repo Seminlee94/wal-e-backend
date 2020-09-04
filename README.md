@@ -22,3 +22,9 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+## Notes
+
+* items
+    * maybe add inventory_quantity field -- when sold out, item is disabled and alert that item is sold out
