@@ -10,5 +10,17 @@ class CartsController < ApplicationController
         cart = Cart.find(params[:id])
         render json: CartSerializer.new(cart).to_serialized_json
     end
+    
+    def update
+        cart = Cart.find(params[:id])
+        cart.update(cart_params)
+        render json: cart
+    end
+    
+    private
+    
+    def cart_params
+        params.require(:cart).permit(:user_id)
+    end
 
 end
