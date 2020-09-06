@@ -1,69 +1,69 @@
-require 'pry'
-require 'json'
-require "uri"
-require "net/http"
-require "dotenv"
-require "rest-client"
-# require_relative "./item.rb"
-# require "httparty"
-Dotenv.load
+# require 'pry'
+# require 'json'
+# require "uri"
+# require "net/http"
+# require "dotenv"
+# require "rest-client"
+# # require_relative "./item.rb"
+# # require "httparty"
+# Dotenv.load
 
 
-class GroceryInfo
+# class GroceryInfo
 
-    @@base_url = "https://api.wegmans.io/products/"
-    @@key = ENV["WEGMAN_API_KEY"]
+#     @@base_url = "https://api.wegmans.io/products/"
+#     @@key = ENV["WEGMAN_API_KEY"]
 
-    def self.category
-        response = RestClient.get("https://api.wegmans.io/products/categories?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
-        result = JSON.parse(response.body)
-        return result["categories"].collect do |category|
-            # category["name"]
-            category["id"]
-        end
-        # if we want category class - .each  key=["name"]
-    end
+#     def self.category
+#         response = RestClient.get("https://api.wegmans.io/products/categories?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
+#         result = JSON.parse(response.body)
+#         return result["categories"].collect do |category|
+#             # category["name"]
+#             category["id"]
+#         end
+#         # if we want category class - .each  key=["name"]
+#     end
 
-    def self.sub_category
-        GroceryInfo.category.collect do |id| 
-            response = RestClient.get("https://api.wegmans.io/products/categories/#{id}?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
-            result = JSON.parse(response.body)
-            return result["categories"].collect do |sub_category|
-                sub_category["id"]
-            end
-        end 
-    end
+#     def self.sub_category
+#         GroceryInfo.category.collect do |id| 
+#             response = RestClient.get("https://api.wegmans.io/products/categories/#{id}?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
+#             result = JSON.parse(response.body)
+#             return result["categories"].collect do |sub_category|
+#                 sub_category["id"]
+#             end
+#         end 
+#     end
 
-    def self.item_by_category
-        GroceryInfo.sub_category.collect do |sub_id|
-            response = RestClient.get("https://api.wegmans.io/products/categories/#{sub_id}?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
-            result = JSON.parse(response.body)
-            return result["products"].collect do |product|
-                product["sku"]
-            end
-        end
-    end
+#     def self.item_by_category
+#         GroceryInfo.sub_category.collect do |sub_id|
+#             response = RestClient.get("https://api.wegmans.io/products/categories/#{sub_id}?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
+#             result = JSON.parse(response.body)
+#             return result["products"].collect do |product|
+#                 product["sku"]
+#             end
+#         end
+#     end
 
-    def self.info
-        skus = GroceryInfo.item_by_category.sample(40)
+#     def self.info
+#         skus = GroceryInfo.item_by_category.sample(40)
 
-        return skus.collect do |sku|
-            response = RestClient.get("https://api.wegmans.io/products/#{sku}?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
-            result = JSON.parse(response.body)
-            # binding.pry
-        end
-    end
+#         return skus.collect do |sku|
+#             response = RestClient.get("https://api.wegmans.io/products/#{sku}?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
+#             result = JSON.parse(response.body)
+#             # binding.pry
+#         end
+#     end
 
-    def self.create_item
-        items = GroceryInfo.info
+#     def self.create_item
+#         items = GroceryInfo.info
 
-        items.each do |item|
-            response = RestClient.get("https://api.wegmans.io/products/#{item["sku"]}/prices?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
-            # response = RestClient.get("https://api.wegmans.io/products/756507/prices?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
-            result = JSON.parse(response.body)
-            price = result["stores"][0]["price"]
-            # binding.pry
-            Item.populate(item, price)
+#         items.each do |item|
+#             response = RestClient.get("https://api.wegmans.io/products/#{item["sku"]}/prices?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
+#             # response = RestClient.get("https://api.wegmans.io/products/756507/prices?api-version=2018-10-18", headers={'Subscription-Key': @@key}){|response, request, result| response }
+#             result = JSON.parse(response.body)
+#             price = result["stores"][0]["price"]
+#             # binding.pry
+#             Item.populate(item, price)
         # Item.find_or_create_by(
         #     item_id: item["sku"], #sku number - product_url
         #     name: item["name"], #product_url
@@ -74,8 +74,8 @@ class GroceryInfo
         #     image: item["tradeIdentifiers"][0]["images"][0],
         #     nutrition: item["nutrition"][0]["description"]
         # )
-        end
-    end
+    #     end
+    # end
 
     # def self.data(item_name)
     #     #list_url = URI("https://api.wegmans.io/products/search?query=#{item_name}&api-version=2018-10-18&") # item names (need to collect SKU)
@@ -125,13 +125,13 @@ class GroceryInfo
 
         # binding.pry
         # 0
-end
+# end
 
 # GroceryInfo.data("milk")
 # GroceryInfo.category
 # GroceryInfo.sub_category
 # GroceryInfo.item_by_category
 # GroceryInfo.info
-GroceryInfo.create_item
+# GroceryInfo.create_item
 
-puts "works"
+# puts "works"
