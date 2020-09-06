@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_04_195730) do
+ActiveRecord::Schema.define(version: 2020_09_06_212953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_09_04_195730) do
     t.integer "inventory_quantity"
     t.string "image"
     t.text "nutrition"
+    t.string "receipt_info"
   end
 
   create_table "users", force: :cascade do |t|

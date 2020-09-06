@@ -15,11 +15,17 @@ class ItemsController < ApplicationController
         item = Item.find(params[:id])
         render json: item, except: [:created_at, :updated_at]
     end
+
+    def delete
+        item = Item.find(params[:id])
+
+        render json: {}
+    end
     
     private
     
     def item_params
-        params.require(:item).permit(:item_id, :name, :sales_price, :description, :inventory_quantity, :image, :nutrition)
+        params.require(:item).permit(:item_id, :name, :sales_price, :description, :receipt_info, :inventory_quantity, :image, :nutrition)
     end
 
 end
