@@ -22,10 +22,10 @@ User.create(name: 'Se Min', username: 'seminL', password: 'password2')
 puts "items"
 
 
-# Item.category
-Item.sub_category("561")
-Item.item_by_category
-Item.info
+Item.category
+# Item.sub_category("561")
+# Item.item_by_category
+# Item.info
 # Item.create_item
 # Item.populate
 
