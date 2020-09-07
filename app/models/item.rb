@@ -96,4 +96,5 @@ class Item < ApplicationRecord
     #         nutrition: response["nutrition"][0]["description"]
     #     )
     # end
+    #
 end
