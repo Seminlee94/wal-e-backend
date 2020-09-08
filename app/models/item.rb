@@ -23,17 +23,17 @@ class Item < ApplicationRecord
     # binding.pry
     @@key = ENV["WEGMAN_API_KEY"]
 
-    def self.category
-        # response = RestClient.get("https://api.wegmans.io/products/categories?api-version=2018-10-18", headers={'Subscription-Key': key}){|response, request, result| response }
-        response = HTTParty.get("https://api.wegmans.io/products/categories?api-version=2018-10-18&subscription-key=#{@@key}") #{|response, request, result| response }
-        result = JSON.parse(response.body)
-        return result["categories"].each do |category|
-            # category["name"]
-            puts "#{category["id"]} - #{category["name"]}"
-            Item.sub_category(category["id"])
-        end
-        # if we want category class - .each  key=["name"]
-    end
+    # def self.category
+    #     # response = RestClient.get("https://api.wegmans.io/products/categories?api-version=2018-10-18", headers={'Subscription-Key': key}){|response, request, result| response }
+    #     response = HTTParty.get("https://api.wegmans.io/products/categories?api-version=2018-10-18&subscription-key=#{@@key}") #{|response, request, result| response }
+    #     result = JSON.parse(response.body)
+    #     return result["categories"].each do |category|
+    #         # category["name"]
+    #         puts "#{category["id"]} - #{category["name"]}"
+    #         Item.sub_category(category["id"])
+    #     end
+    #     # if we want category class - .each  key=["name"]
+    # end
     
     def self.sub_category(id)
         # Item.category.collect do |id| 
@@ -76,122 +76,64 @@ class Item < ApplicationRecord
         response = HTTParty.get("https://api.wegmans.io/products/categories/#{sub_id}?api-version=2018-10-18&subscription-key=#{@@key}")#{|response, request, result| response }
         result = JSON.parse(response.body)
         # binding.pry
-        puts "#{result["products"].count} products"
+        # puts "#{result["products"].count} products"
         if result["products"].count == 0 
             puts "no"
         else
-            return result["products"][0...5].each do |product|
+            return result["products"][0..30].each do |product|
                 
                 puts product
                 puts product["sku"]
                 
                 Item.info(product["sku"])
-
+                
                 # Item.info(42564)
-                # end
-                # binding.pry
             end
         end
-        # end
     end
     
     def self.info(sku)
+        # binding.pry
         # skus = Item.item_by_category.sample(40)
         
-        # binding.pry
         # return skus.each do |sku|
-        response = HTTParty.get("https://api.wegmans.io/products/#{sku}?api-version=2018-10-18&subscription-key=#{@@key}") #{|response, request, result| response }
+        response = HTTParty.get("https://api.wegmans.io/products/#{sku}?api-version=2018-10-18&subscription-key=#{@@key}")
         result = JSON.parse(response.body)
-        response_price = HTTParty.get("https://api.wegmans.io/products/#{sku}/prices?api-version=2018-10-18&subscription-key=#{@@key}")#{|response, request, result| response }
+        response_price = HTTParty.get("https://api.wegmans.io/products/#{sku}/prices?api-version=2018-10-18&subscription-key=#{@@key}")
         result_price = JSON.parse(response_price.body)
         price = result_price["stores"][0]["price"]
-
-        # binding.pry
-
-        
-        # binding.pry
-        # if prod_image == nil || false || []
-        #     placeholder_image = "https://assets.materialup.com/uploads/b03b23aa-aa69-4657-aa5e-fa5fef2c76e8/preview.png"
-        # end
+      
         name = result["name"]
-
-        if result["tradeIdentifiers"][0]
-            return result["tradeIdentifiers"][0]["images"][0]
-            # placeholder_image = "https://assets.materialup.com/uploads/b03b23aa-aa69-4657-aa5e-fa5fef2c76e8/preview.png"
-            # result["tradeIdentifiers"][0] = "https://assets.materialup.com/uploads/b03b23aa-aa69-4657-aa5e-fa5fef2c76e8/preview.png"
-        else #result["tradeIdentifiers"][0] == nil || false # || []
-            # return result["tradeIdentifiers"][0]["images"][0]
-            return result["tradeIdentifiers"][0] = "https://assets.materialup.com/uploads/b03b23aa-aa69-4657-aa5e-fa5fef2c76e8/preview.png"
+                
+        if result["tradeIdentifiers"] == [] || result["tradeIdentifiers"][0]["images"] == []
+            result["tradeIdentifiers"] = "https://assets.materialup.com/uploads/b03b23aa-aa69-4657-aa5e-fa5fef2c76e8/preview.png"
+        else result["tradeIdentifiers"][0]["images"][0]
+            result["tradeIdentifiers"] = result["tradeIdentifiers"][0]["images"][0]
         end
 
-        # if consumer_description == nil || false || []
-        #     placeholder_desc = name
-        # end
-        if result["descriptions"]["consumer"] #== nil || false || []
+        if result["descriptions"]["consumer"] 
+            result["descriptions"]["consumer"]
+        else
+            result["descriptions"]["consumer"] = name
+        end
+        
+        if result["descriptions"]["receipt"] 
+            result["descriptions"]["receipt"]
+        else
+            result["descriptions"]["receipt"] = name
+        end
             
-            return result["descriptions"]["consumer"]
-        else
-            return result["descriptions"]["consumer"] = name
-        end
-
-        if result["descriptions"]["receipt"] #== nil || false || []
-            # placeholder_receipt = name
-            return result["descriptions"]["receipt"]
-        else
-            return result["descriptions"]["receipt"] = name
-        end
-
-        
-        # prod_image = result["tradeIdentifiers"][0]["images"][0]
-        # consumer_description = result["descriptions"]["consumer"]
-        # receipt_info = result["descriptions"]["receipt"]
-        
-        # if sku == 30526
-            # binding.pry
-        # end
-
-        # item = {
-        #     item_id: sku, #sku number - product_url
-        #     name: name, #product_url
-        #     sales_price: price, #price_url
-        #     description: consumer_description || placeholder_desc,
-        #     receipt_info: receipt_info || placeholder_receipt,
-        #     inventory_quantity: rand(50..100),
-        #     image: prod_image || placeholder_image #result["tradeIdentifiers"][0]["images"][0]
-        #     # nutrition: result["nutrition"][0]["description"]
-        # }
-        
-
         item = Item.create(
             item_id: sku, #sku number - product_url
+            category: "Cheese",
+            sub_category: "Accompaniments",
             name: name, #product_url
             sales_price: price, #price_url
             description: result["descriptions"]["consumer"],
             receipt_info: result["descriptions"]["receipt"],
             inventory_quantity: rand(50..100),
-            image: result["tradeIdentifiers"][0] || result["tradeIdentifiers"][0]["images"][0]
-            # nutrition: result["nutrition"][0]["description"]
+            image: result["tradeIdentifiers"],
+            nutrition: result["nutrients"] 
         )
-
-        # binding.pry
-        puts "#{item["name"]} CREATED"
-        # puts "#{item["name"]}"
-        # puts "#{item["item_id"]}"
-        # puts "#{item["sales_price"]}"
-        # puts "#{item["description"]}"
-        # puts "#{item["receipt_info"]}"
-        # puts "#{item["image"]}"
-        # puts "\n"
-        # puts "#{}"
-        # puts "#{}"
-        # puts "#{}"
-        # puts "#{}"
-        # binding.pry
-        # end
-            
     end
-
 end
-
-# Item.sub_category("561")
-# Item.category
