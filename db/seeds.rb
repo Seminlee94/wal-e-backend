@@ -23,7 +23,7 @@ puts "items"
 
 
 # Item.category
-# Item.item_by_category("561-562") ## ""Bread, Packaged""
+# Item.item_by_category("561-562") ## ""Bread, Packaged"
 # Item.item_by_category("561-563") ## ""Stuffing, Pitas, Flatbreads, Wraps & Pizza Shells""
 # Item.item_by_category("561-564") ## "Rolls"
 # Item.item_by_category("561-565") ## "Breakfast"
@@ -40,8 +40,7 @@ puts "items"
 # Item.item_by_category("917-6981") ## "Goat & Sheep"
 # Item.item_by_category("917-6982") ## "Mediterranean Antipasto"
 # Item.item_by_category("917-6983") ## "Snacking & Entertaining"
-Item.item_by_category("917-6984") ## "Accompaniments"
-# Item.sub_category("917")
+# Item.item_by_category("917-6984") ## "Accompaniments"
 # Item.sub_category("6642")
 # Item.sub_category("6940")
 # Item.sub_category("6941")
