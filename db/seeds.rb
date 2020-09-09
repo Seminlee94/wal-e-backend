@@ -10,13 +10,13 @@
 # Item.destroy_all
 User.destroy_all
 Cart.destroy_all
-# CartItem.destroy_all
+CartItem.destroy_all
 
 puts "starting"
 
 puts "users"
 
-User.create(name: 'Alex',  username: 'alexb', password: 'password1')
+# User.create(name: 'Alex',  username: 'alexb', password: 'password1')
 User.create(name: 'Se Min', username: 'seminL', password: 'password2')
 
 puts "items"
@@ -40,12 +40,24 @@ puts "items"
 # Item.item_by_category("917-6981") ## "Goat & Sheep"
 # Item.item_by_category("917-6982") ## "Mediterranean Antipasto"
 # Item.item_by_category("917-6983") ## "Snacking & Entertaining"
-# Item.item_by_category("917-6984") ## "Accompaniments"
-# Item.sub_category("6642")
-# Item.sub_category("6940")
-# Item.sub_category("6941")
-# Item.sub_category("6942")
-# Item.sub_category("7221")
+# Item.item_by_category("6940-4149") ## "Accompaniments"
+# Item.item_by_category("6940-716")  # Beef
+# Item.item_by_category("6940-717")  # Pork
+# Item.item_by_category("6940-722")  # Ground Meat
+# Item.item_by_category("6940-723")  # Turkey
+# Item.item_by_category("6940-725")  # Sausage 
+# Item.item_by_category("6940-6960") # Lamb, Veal, & Other Meat
+# Item.item_by_category("6940-7222") # Ham
+# Item.item_by_category("6940-7224") # Chicken
+# Item.item_by_category("6940-7241") # Bacon
+# Item.item_by_category("6940-7242") # Halal Meat
+# Item.item_by_category("7221-851")  # Crab and Lobster
+# Item.item_by_category("7221-853")  # Frozen Shrimp & Seafood
+# Item.item_by_category("7221-855")  # Fresh Seafood
+# Item.item_by_category("7221-1034") # Smoked, Spreads & More
+# Item.item_by_category("7221-1263") # Ready to Cook Seafood
+
+
 
 
 # 10.times do
@@ -56,13 +68,13 @@ puts "carts"
 
 
 Cart.create(user_id: User.first.id)
-Cart.create(user_id: User.second.id)
+# Cart.create(user_id: User.second.id)
 
 
 puts "item_carts"
 
-# 5.times do
-#     CartItem.create(item_id: Item.all.sample.id, cart_id: Cart.all.sample.id)
-# end
+5.times do
+    CartItem.create(item_id: Item.all.sample.id, cart_id: Cart.all.sample.id)
+end
 
 puts "done"
