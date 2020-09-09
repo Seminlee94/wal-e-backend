@@ -20,7 +20,7 @@ class CartItemsController < ApplicationController
         
     end
     
-    def delete
+    def destory
         cart_item = CartItem.find(params[:id])
         cart_item.destroy
     
