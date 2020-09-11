@@ -10,6 +10,12 @@ class ItemsController < ApplicationController
         item = Item.find(params[:id])
         render json: item, except: [:created_at, :updated_at]
     end
+
+    def create
+        item = Item.search(params[:name])
+
+        render json: item, except: [:created_at, :updated_at]
+    end
     
     def update
         item = Item.find(params[:id])
