@@ -38,10 +38,10 @@ ActiveRecord::Schema.define(version: 2020_09_11_162855) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "inventory_quantity"
     t.string "image"
-    t.text "nutrition"
     t.string "receipt_info"
     t.string "category"
     t.string "sub_category"
+    t.string "nutrition"
   end
 
   create_table "users", force: :cascade do |t|
