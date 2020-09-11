@@ -17,7 +17,10 @@ class CartItemsController < ApplicationController
 
     def update
         cart_item = CartItem.find(params[:id])
-        
+        cart_item.update(cart_item_params)
+        render json: CartItemSerializer.new(cart_item).to_serialized_json
+        # binding.pry
+        # render json: cart_item
     end
     
     def destroy
