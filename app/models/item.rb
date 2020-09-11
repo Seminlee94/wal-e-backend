@@ -133,7 +133,6 @@ class Item < ApplicationRecord
             inventory_quantity: rand(50..100),
             image: result["tradeIdentifiers"],
             nutrition: result["nutrients"],
-            quantity: 1 
         )
     end
 
