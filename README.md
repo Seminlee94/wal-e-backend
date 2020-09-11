@@ -1,30 +1,31 @@
-# README
+# WAL-E
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Developed by Alex Beciana and Se Min Lee
 
-Things you may want to cover:
+## Our Project
 
-* Ruby version
+An ecommerce website to search and order grocery items as well as compare nutrition details.
 
-* System dependencies
+We used Wegmans' API to gather information on a plethora of grocery items.
 
-* Configuration
+## How to Install Run the Application
 
-* Database creation
+- [ ] Fork this repository
 
-* Database initialization
+- [ ] Clone your own branch
 
-* How to run the test suite
+- [ ] Open your terminal
 
-* Services (job queues, cache servers, search engines, etc.)
+- [ ] Navigate to the correct directory
 
-* Deployment instructions
+- [ ] Make sure that your are in the parent directory
 
-* ...
+- [ ] Run `bundle install` in your terminal to make sure you have all of the necessary gems installed
 
+- [ ] Run `rails db:migrate` to migratae tables to set up the database tables
 
-## Notes
+- [ ] Run `rails db:seed` to populate the database tables with sample data. Uncomment lines 26 to 58 to seed data as well as update lines 71 and 72 for the correct category and subcategory.
 
-* items
-    * maybe add inventory_quantity field -- when sold out, item is disabled and alert that item is sold out
+- [ ] To test that everything works, you may run `rails console` to make sure sample data has been added.
+
+- [ ] Run `ruby bin/run.rb` within your terminal
