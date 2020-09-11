@@ -2,6 +2,7 @@ class CartItemSerializer
     
     def initialize(cart_item_obj)
         @cart_item_obj = cart_item_obj
+        # binding.pry
     end
 
     def to_serialized_json

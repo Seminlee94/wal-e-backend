@@ -17,10 +17,13 @@ class CartItemsController < ApplicationController
 
     def update
         cart_item = CartItem.find(params[:id])
-        
+        cart_item.update(cart_item_params)
+        render json: CartItemSerializer.new(cart_item).to_serialized_json
+        # binding.pry
+        # render json: cart_item
     end
     
-    def destory
+    def destroy
         cart_item = CartItem.find(params[:id])
         cart_item.destroy
     
@@ -30,7 +33,7 @@ class CartItemsController < ApplicationController
     private
     
     def cart_item_params
-        params.require(:cart_item).permit(:cart_id, :item_id)
+        params.require(:cart_item).permit(:cart_id, :item_id, :quantity)
     end
     
     

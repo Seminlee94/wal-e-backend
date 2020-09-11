@@ -48,7 +48,6 @@ class Item < ApplicationRecord
         result_price = JSON.parse(response_price.body)
         price = result_price["stores"][0]["price"]
         name = result["name"]
-                
         if result["tradeIdentifiers"] == [] || result["tradeIdentifiers"][0]["images"] == []
             result["tradeIdentifiers"] = "https://assets.materialup.com/uploads/b03b23aa-aa69-4657-aa5e-fa5fef2c76e8/preview.png"
         else result["tradeIdentifiers"][0]["images"][0]
@@ -67,26 +66,25 @@ class Item < ApplicationRecord
             result["descriptions"]["receipt"] = name
         end
             
-        item = Item.create(
+        item = Item.create!(
             item_id: sku, #sku number - product_url
-            category: "Seafood",
-            sub_category: "Ready to Cook Seafood",
+            category: "Bread",
+            sub_category: "Bread, Packaged",
             name: name, #product_url
             sales_price: price, #price_url
             description: result["descriptions"]["consumer"],
             receipt_info: result["descriptions"]["receipt"],
             inventory_quantity: rand(50..100),
             image: result["tradeIdentifiers"],
-            nutrition: result["nutrients"] 
+            nutrition: result["nutrients"],
         )
     end
 
     def self.search(query)
-        binding.pry
         search_query = query.split(" ").join("%20")
-        response = HTTParty.get("https://api.wegmans.io/products/search?query=#{query}&api-version=2018-10-18&subscription-key=#{@@key}")
-
-        response["results"].sample(5).each do |item|
+        response = HTTParty.get("https://api.wegmans.io/products/search?query=#{search_query}&api-version=2018-10-18&subscription-key=#{@@key}")
+        # binding.pry
+        response["results"][0...6].map do |item|
             sku = item["sku"]
             Item.info(sku)
         end
