@@ -124,15 +124,16 @@ class Item < ApplicationRecord
             
         item = Item.create!(
             item_id: sku, #sku number - product_url
-            # category: "Category not found",
-            # sub_category: "sub-category not found",
+            category: "Bread",
+            sub_category: "Bread, Packaged",
             name: name, #product_url
             sales_price: price, #price_url
             description: result["descriptions"]["consumer"],
             receipt_info: result["descriptions"]["receipt"],
             inventory_quantity: rand(50..100),
             image: result["tradeIdentifiers"],
-            nutrition: result["nutrients"] 
+            nutrition: result["nutrients"],
+            quantity: 1 
         )
     end
 

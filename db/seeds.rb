@@ -8,22 +8,22 @@
 # require './app/models/wegman_api_data.rb'
 
 # Item.destroy_all
-User.destroy_all
-Cart.destroy_all
-CartItem.destroy_all
+# User.destroy_all
+# Cart.destroy_all
+# CartItem.destroy_all
 
 puts "starting"
 
 puts "users"
 
 # User.create(name: 'Alex',  username: 'alexb', password: 'password1')
-User.create(name: 'Se Min', username: 'seminL', password: 'password2')
+# User.create(name: 'Se Min', username: 'seminL', password: 'password2')
 
 puts "items"
 
 
 # Item.category
-# Item.item_by_category("561-562") ## ""Bread, Packaged"
+Item.item_by_category("561-562") ## ""Bread, Packaged"
 # Item.item_by_category("561-563") ## ""Stuffing, Pitas, Flatbreads, Wraps & Pizza Shells""
 # Item.item_by_category("561-564") ## "Rolls"
 # Item.item_by_category("561-565") ## "Breakfast"
@@ -67,14 +67,14 @@ puts "items"
 puts "carts"
 
 
-Cart.create(user_id: User.first.id)
+# Cart.create(user_id: User.first.id)
 # Cart.create(user_id: User.second.id)
 
 
 puts "item_carts"
 
-5.times do
-    CartItem.create(item_id: Item.all.sample.id, cart_id: Cart.all.sample.id)
-end
+# 5.times do
+#     CartItem.create(item_id: Item.all.sample.id, cart_id: Cart.all.sample.id)
+# end
 
 puts "done"
