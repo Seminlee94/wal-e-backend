@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_162855) do
+ActiveRecord::Schema.define(version: 2020_09_13_034157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2020_09_11_162855) do
     t.string "receipt_info"
     t.string "category"
     t.string "sub_category"
-    t.string "nutrition"
+    t.text "nutrition"
   end
 
   create_table "users", force: :cascade do |t|

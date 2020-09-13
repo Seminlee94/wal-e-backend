@@ -41,7 +41,7 @@ class Item < ApplicationRecord
     end
     
     def self.info(sku)
-        binding.pry
+        # binding.pry
         response = HTTParty.get("https://api.wegmans.io/products/#{sku}?api-version=2018-10-18&subscription-key=#{@@key}")
         result = JSON.parse(response.body)
         response_price = HTTParty.get("https://api.wegmans.io/products/#{sku}/prices?api-version=2018-10-18&subscription-key=#{@@key}")
